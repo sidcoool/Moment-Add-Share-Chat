@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
+    <title>Sign Up</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
@@ -12,17 +12,23 @@
 <body class="alert-warning">
         <h1 class="text-center mt-4 p-2 alert-info rounded-pill ml-5 mr-5">ADD AND SHARE YOUR SPECIAL MOMENTS</h1>
     <div class="container bg-light p-2 mt-3">
-            <h2 class="font-weight-bold p-2 m-4">Login</h2>
-    <form action="/login" method="post" class="form-group m-4  p-2 col-sm-10" >
-        <label for="username" class="mt-2">Username</label>
+            <h2 class="font-weight-bold p-2 m-4">Sign Up</h2>
+    <form action="/signup" method="post" class="form-group  m-4 p-2 col-sm-10">
+        <label for="Fname" class="mt-2">First Name</label>
+        <input type="text" name="Fname" placeholder="Enter Firstname" class="form-control col-4">
+
+        <label for="Lname" class="mt-4">Last Name</label>
+        <input type="text" name="Lname" placeholder="Enter Lastname" class="form-control col-4">
+
+        <label for="username" class="mt-4">Username</label>
     <input type="text" name="username" placeholder="Enter Username" class="form-control col-4">
 
     <label for="password" class="mt-4">Password</label>
-    <input type="password" name="password"  placeholder="Enter Password" class="form-control col-4">
-
-    <input type="submit" value="LOGIN" class="btn btn-dark p-2 mt-4 col-2 d-block">
-    <h5 class="mt-4 d-inline-block">New User ?</h5>
-    <a href="signup.html" class="d-inline-flex"><h5>Sign Up</h5></a>
+    <input type="password" name="password" placeholder="Enter Password" class="form-control col-4">
+    
+    <input type="submit" value="SIGN UP" class="btn btn-dark p-2 mt-4 col-2 d-block">
+    <h5 class="mt-4 d-inline-block">Already a User ?</h5>
+    <a href="index.html" class="d-inline-flex"><h5>Login</h5></a>
     </form>
 </div>
 </body>

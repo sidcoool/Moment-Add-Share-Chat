@@ -1,11 +1,39 @@
 const express = require("express")
 const app = express()
 const path = require("path")
+const User = require("./db").User
+const session = require('express-session')
+const passport = require('./passport').passport
 const {MongoClient} = require("mongodb")
 const  mongo_url = "mongodb://localhost:27017"
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+
+app.use(session({
+    secret: "dont tell this to any one"
+}))
+
+app.use(passport.initialize())
+app.use(passport.session())
+
+app.post("/signup", (req, res)=>{
+    User.create({
+        Fname: req.body.Fname,
+        Lname: req.body.Lname,
+        username: req.body.username,
+        password: req.body.password
+    }).then(user => {
+        res.redirect("/momAdder")
+    }).catch(err => {
+        console.error(err)
+    })
+})
+
+app.post("/login", passport.authenticate("local", {
+    failureRedirect: "/index",
+    successRedirect: "/"
+}))
 
 app.get("/mom-get", (req, res)=>{
     MongoClient.connect(mongo_url, (err, client)=>{
@@ -54,6 +82,22 @@ app.post("/mom-post", (req, res)=>{
     })
 })
 
+app.get("/", (req, res) => {
+    if (req.user) {
+        const dirName = path.join(__dirname,"view-file")
+       res.sendFile("momentAdder.html" , {root: dirName}, (err) => {
+       res.end();
+
+    if (err) throw(err);
+  });
+    } 
+    else {
+        res.redirect('/index')
+    }
+})
+
+app.use("/signup", express.static(path.join(__dirname, "view-file/signup.html")))
+app.use("/index", express.static(path.join(__dirname, "view-file/index.html")))
 app.use(express.static(path.join(__dirname, "view-file")))
 
 app.listen(3333, ()=>{
