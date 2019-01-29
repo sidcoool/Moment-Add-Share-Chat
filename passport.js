@@ -6,9 +6,11 @@ passport.serializeUser((user, done)=>{
     done(null, user.username)
 })
 
-passport.deserializeUser((user, done)=>{
+passport.deserializeUser((userName, done)=>{
     User.findOne({
-        username: user
+        where: {
+            username: userName
+        }
     }).then(user => {
         if(!user)
         return done(new Error("No such user"))
@@ -19,17 +21,18 @@ passport.deserializeUser((user, done)=>{
  })
 })
 
-passport.use(new LocalStrategy((username, password, done)=>{
+passport.use(new LocalStrategy((userName, password, done)=>{
     User.findOne({
         where: {
-            username: username
+            username: userName
         }
     }).then((user)=>{
+
         if(!user)
         return done(null, false, {message: "No such User"})
 
         if(user.password !==password){
-            return done(null, false, {meassage: "Wrong password"})
+            return done(null, false, {message: "Wrong password"})
         }
         return done(null, user)
     }).catch((err) => {

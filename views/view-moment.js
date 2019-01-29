@@ -1,5 +1,5 @@
 $(()=>{
-    $.get("/mom-get", (data)=>{
+    $.get("private/mom", (data)=>{
         moments = data
         console.log(data)
         for(let moment of data){

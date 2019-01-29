@@ -2,7 +2,7 @@ $(()=>{
     console.log("Page open")
     $("#add-btn").click(()=>{
 
-        $.post("/mom-post", {
+        $.post("private/mom", {
             date : $("input[name=date]").val(),
             place : $("input[name=place]").val(),
             mom_text : $("#mom-box").val()
