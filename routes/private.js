@@ -1,7 +1,6 @@
 const express = require("express")
 const route = express.Router()
 const path = require("path")
-const User = require("../db").User
 const {MongoClient} = require("mongodb")
 const  mongo_url = "mongodb://localhost:27017"
 
@@ -11,9 +10,6 @@ route.get("/", (req, res) => {
     console.log("private here")
     if (req.user) {
         privateUser = req.user.username
-        console.log("========================")
-        console.log("After login", req.user.username)
-        console.log("========================")
         const dirName = path.join(__dirname, "../views")
        res.sendFile("momentAdder.html" , {root: dirName}, (err) => {
        res.end();
@@ -26,15 +22,24 @@ route.get("/", (req, res) => {
     }
 })
 
+route.get("/logout", (req, res)=>{
+    console.log("inside logout")
+    req.session.destroy(function (err) {
+        privateUser = ""
+          });
+})
+
+
+route.get("/username", (req,res)=>{
+    res.send(privateUser)
+})
+
 route.get("/mom", (req, res)=>{
     MongoClient.connect(mongo_url, (err, client)=>{
         if(err) throw err;
 
         const  momentDB = client.db("momentDB")
         const moments = momentDB.collection("moments")
-        console.log("========================")
-        console.log(privateUser)
-        console.log("========================")
         moments.find({
                 user: privateUser
         }).toArray((err, data)=>{

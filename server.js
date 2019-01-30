@@ -12,17 +12,15 @@ app.use(session({
     secret: "dont tell this to any one"
 }))
 
-
-
 app.use(passport.initialize())
 app.use(passport.session())
-
-app.use(flash())
 
 app.use(express.static(path.join(__dirname, "views")))
 
 app.use("/private", require("./routes/private"))
 app.use("/", require("./routes/root"))
+
+
 
 app.listen(3333, ()=>{
     console.log("Server Running")

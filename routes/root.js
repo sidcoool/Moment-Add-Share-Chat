@@ -1,9 +1,10 @@
 const express = require("express")
 const route = express.Router()
 const path = require("path")
+const User = require("../db").User
 const session = require('express-session')
 const flash = require("connect-flash")
-const passport = require('../passport').passport
+const passport = require("../passport").passport
 
 route.use(flash())
 
@@ -33,5 +34,7 @@ route.get("/login", (req, res)=>{
     if (err) throw(err);
   })
 })
+
+
 
 module.exports = route

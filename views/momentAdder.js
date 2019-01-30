@@ -1,5 +1,19 @@
 $(()=>{
     console.log("Page open")
+
+    async function log_out() {
+        await $.get("private/logout")
+    }
+
+    $("#logout-btn").click(()=>{
+        log_out()
+        location.reload(true)
+    })
+
+    $.get("private/username").then((username)=>{
+        $("#user").text(`Welcome ${username}`)
+    })
+
     $("#add-btn").click(()=>{
 
         $.post("private/mom", {
@@ -15,5 +29,4 @@ $(()=>{
         alert(data.responseJSON.message)
       })
     })
-
 })

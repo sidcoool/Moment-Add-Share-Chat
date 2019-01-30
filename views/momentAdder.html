@@ -9,11 +9,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
     <script src="momentAdder.js"></script>
-    <!-- <link rel="stylesheet" href="index.css"> -->
 </head>
     <body background="back.jpg">
-        <nav class="navbar navbar-expand-sm bg-secondary navbar-dark">
-                <ul class="navbar-nav">
+        <nav class="navbar navbar-expand-lg bg-secondary navbar-dark">
+                <ul class="navbar-nav mr-auto">
                   <li class="nav-item active">
                     <a class="nav-link" href="momentAdder.html">Add Moments</a>
                   </li>
@@ -21,10 +20,14 @@
                     <a class="nav-link" href="view-moment.html">View Moments</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Chat</a>
+                    <a class="nav-link" href="chat.html">Chat</a>
                   </li>
                 </ul>
+                <span>
+                  <button class="btn btn-success" id="logout-btn">Log Out</button>
+                </span>
               </nav>
+              <h4 class="font-weight-bold p-3 alert-light rounded" style="width: max-content" id="user"></h4>
     <h2 class="text-center text-info p-2 alert-warning rounded-pill font-weight-bold my-3" style="width: 50%; margin-left: 25%;">  Add your Moment </h2>
     <div class="container border border-dark rounded p-4 bg-light">
         <form  class="form-group">

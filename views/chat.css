@@ -1,0 +1,62 @@
+body {
+
+    background-image: url("back.jpg")
+  }
+
+.container-custom {
+border: 2px solid #bbbaba;
+background-color: whitesmoke;
+border-radius: 5px;
+padding: 10px;
+margin: 10px 0;
+opacity: 0.8;
+}
+
+.darker {
+border-color: #ccc;
+background-color:whitesmoke;
+}
+
+.container-custom::after {
+content: "";
+clear: both;
+display: table;
+}
+
+.container-custom img, .carder-l{
+float: left;
+max-width: 60px;
+width: 100%;
+padding: 1px;
+margin-right: 20px;
+border-radius: 50%;
+}
+
+.container-custom img.right, .carder-r{
+float: right;
+padding: 1px;
+max-width: 60px;
+margin-left: 20px;
+margin-right:0;
+}
+
+.time-right {
+float: right;
+color: #aaa;
+}
+
+.time-left {
+float: left;
+color: #999;
+}
+
+.text-right{
+    float: right;
+    color: rgb(53, 53, 53) !important;
+}
+
+.text-left{
+    float: left;
+    color: rgb(53, 53, 53) !important;
+}
+
