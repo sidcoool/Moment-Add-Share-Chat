@@ -27,17 +27,22 @@
                   <button class="btn btn-success" id="logout-btn">Log Out</button>
                 </span>
               </nav>
+
               <h4 class="font-weight-bold p-3 alert-light rounded" style="width: max-content" id="user"></h4>
+
     <h2 class="text-center text-info p-2 alert-warning rounded-pill font-weight-bold my-3" style="width: 50%; margin-left: 25%;">  Add your Moment </h2>
+
     <div class="container border border-dark rounded p-4 bg-light">
-        <form  class="form-group">
-            <h5 class="font-weight-bold">Date</h5>
+        <form  class="form-group" action="private/mom" enctype="multipart/form-data" method="POST" id="mom-box">
+          <h5 class="font-weight-bold">Snap</h5>
+          <input type="file" name="picture" accept="image/*" class="my-1">
+            <h5 class="font-weight-bold my-3">Date</h5>
             <input type="date" name="date" class="form-control my-4">
             <h5 class="font-weight-bold">Place</h5>
             <input type="text" name="place" class="form-control my-4">
             <h5 class="font-weight-bold"> Moment</h5>
-            <textarea  class="form-control my-4" id="mom-box" rows="4" cols="20" wrap="soft"> </textarea><br>
-            <input type="button" value="ADD" id="add-btn" class="text-center form-control btn btn-dark  col-sm-3 my-2">
+            <input type="text" name="momentText" class="form-control my-4"><br>
+            <input type="submit" value="ADD" id="add-btn" class="text-center form-control btn btn-dark  col-sm-3 my-2">
         </form>
     </div>
 </body>

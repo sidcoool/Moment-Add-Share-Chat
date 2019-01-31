@@ -16,10 +16,10 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.use(express.static(path.join(__dirname, "views")))
+app.use("/uploads",express.static(path.join(__dirname, "uploads")))
 
 app.use("/private", require("./routes/private"))
 app.use("/", require("./routes/root"))
-
 
 
 app.listen(3333, ()=>{

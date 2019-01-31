@@ -1,8 +1,11 @@
 const express = require("express")
 const route = express.Router()
 const path = require("path")
+const multer = require("multer")
+const upload = multer({ dest: './uploads/' })
 const {MongoClient} = require("mongodb")
 const  mongo_url = "mongodb://localhost:27017"
+const fs = require('fs')
 
 let privateUser
 
@@ -52,32 +55,32 @@ route.get("/mom", (req, res)=>{
 } )
 
 
-route.post("/mom", (req, res)=>{
-    MongoClient.connect(mongo_url, (err, client)=>{
-        if(err){
-         res.send({
-            success: false,
-            message: `Could not connect to Database 
-            ${err}`
-        })
-    }
-        else{
-         res.send({
-            success: true,
-            message: "Could  connect to Database"
-        })
-    }
+route.post("/mom", upload.single('picture'), (req, res) => {
 
+let filename = "sid_pic.jpg"
+if (req.file) {
+    console.log("Uploading file...")
+    filename = req.file.filename + ".jpg"
+
+    fs.rename(`/home/sid/Desktop/Moment Adder and Chatting Platform/uploads/${req.file.filename}`, 
+    `/home/sid/Desktop/Moment Adder and Chatting Platform/uploads/${req.file.filename}.jpg`,(err)=>{
+        if(err)
+        console.error(err)
+    })
+}
+
+    MongoClient.connect(mongo_url, (err, client)=>{
         const  momentDB = client.db("momentDB")
         const moments = momentDB.collection("moments")
 
         moments.insertOne({
+            img: filename,
             user: privateUser,
             date: req.body.date,
             place: req.body.place,
-            mom_text: req.body.mom_text
+            mom_text: req.body.momentText
         }, (err, result)=>{
-            if(err) console.log(err)
+            if(err) console.error(err)
             else
             console.log(result)
         })
@@ -87,3 +90,4 @@ route.post("/mom", (req, res)=>{
 })
 
 module.exports = route
+

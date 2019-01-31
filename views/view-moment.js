@@ -6,24 +6,44 @@ $(()=>{
             console.log(moment.date)
             $("#mom-container").append(
                 $("<div>")
-                .attr("class","border-secondary bg-warning p-4 my-2")
+                .attr("class","border-dark  p-4 my-2")
                 .css("border-radius","50px")
+                .css("background-color","bisque")
+                .css("border-style","dotted")
                 .append(
-                    $("<h5>")
-                    .attr("class","font-weight-bold")
-                    .text("Date: " + moment.date)
+                    $("<div>")
+                    .attr("class","row")
+                    .append(
+                    $("<div>")
+                    .attr("class","col-6")
+                    .append(
+                        $("<h5>")
+                        .attr("class","font-weight-bold")
+                        .text("Date: " + moment.date)
+                    )
+                    .append(
+                        $("<h5>")
+                        .attr("class","font-weight-bold")
+                        .text("Place: " + moment.place)
+                    )
+                    .append(
+                        $("<h5>")
+                        .attr("class","font-weight-bold")
+                        .text("Moment: " + moment.mom_text)
+                    )
                 )
                 .append(
-                    $("<h5>")
-                    .attr("class","font-weight-bold")
-                    .text("Place: " + moment.place)
+                    $("<div>")
+                    .attr("class","col-6")
+                    .append(
+                        $("<img>")
+                        .attr("src",`../uploads/${moment.img}`)
+                        .attr("width","mr-auto")
+                        .attr("height","200px")
+                    )
+                    // )/home/sid/Desktop/Moment Adder and Chatting Platform/uploads/ac94507d2d100a7965e7513c5a68cf0a.jpg
                 )
-                .append(
-                    $("<h5>")
-                    .attr("class","font-weight-bold")
-                    .text("Moment: " + moment.mom_text)
                 )
-                )
-        }
+            )}
     })
 })
