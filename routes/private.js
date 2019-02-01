@@ -25,6 +25,7 @@ route.get("/", (req, res) => {
     }
 })
 
+
 route.get("/logout", (req, res)=>{
     console.log("inside logout")
     req.session.destroy(function (err) {
@@ -57,7 +58,7 @@ route.get("/mom", (req, res)=>{
 
 route.post("/mom", upload.single('picture'), (req, res) => {
 
-let filename = "sid_pic.jpg"
+let filename = ""
 if (req.file) {
     console.log("Uploading file...")
     filename = req.file.filename + ".jpg"

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+<script src="/socket.io/socket.io.js"></script>
 <script src="chat.js"></script>
 
 <style type="text/css">
@@ -18,6 +19,7 @@
       color:darkslategrey;
   }
 </style>
+
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-secondary navbar-dark">
@@ -36,6 +38,11 @@
           <button class="btn btn-success" id="logout-btn">Log Out</button>
         </span>
       </nav>
+
+<div class="container alert-success p-2 mt-5 rounded-pill" id="userMsg">
+  <h2 class="text-center font-weight-bold">Enter First Moment with your profile pic to start</h2>
+</form>
+</div>
 
 <div id="chat-box" class="container w-50 alert-heading text-center p-2 mt-2" style="background-color:rgb(212, 205, 196); height: auto; max-height: 500px; overflow-y: scroll">
 <h2 class="font-weight-bold">Chat</h2>
@@ -73,10 +80,10 @@
       </div>
   <p class="text-right alert-light p-2 rounded-pill font-weight-bold">Nah, I dunno. Play soccer.. or learn more coding perhaps cedeede dede deded ded?</p>
   <span class="time-left">11:05</span>
-</div>
+</div> -->
 <form class="form-group">
-  <input type="text" class="form-control w-100 font-weight-bold" placeholder="Send Message" style="background-color:whitesmoke">
-   <span class="fa far fa-paper-plane ppl"></span> -->
+  <input type="text" class="form-control w-100 font-weight-bold" placeholder="Send Message" style="background-color:whitesmoke" id="chat-input">
+   <span class="fa far fa-paper-plane ppl" id="chat-btn"></span>
 </form>
 </div>
 </body>
