@@ -13,7 +13,9 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 app.use(session({
-    secret: "dont tell this to any one"
+    secret: '24khbkhb6k24hjb626',
+  resave: false,
+  saveUninitialized: true
 }))
 
 app.use(passport.initialize())

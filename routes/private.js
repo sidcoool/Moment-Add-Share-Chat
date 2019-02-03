@@ -7,12 +7,10 @@ const {MongoClient} = require("mongodb")
 const  mongo_url = "mongodb://localhost:27017"
 const fs = require('fs')
 
-let privateUser
 
 route.get("/", (req, res) => {
     console.log("private here")
     if (req.user) {
-        privateUser = req.user.username
         const dirName = path.join(__dirname, "../views")
        res.sendFile("momentAdder.html" , {root: dirName}, (err) => {
        res.end();
@@ -29,13 +27,16 @@ route.get("/", (req, res) => {
 route.get("/logout", (req, res)=>{
     console.log("inside logout")
     req.session.destroy(function (err) {
-        privateUser = ""
+        ()=>{}
           });
 })
 
 
 route.get("/username", (req,res)=>{
-    res.send(privateUser)
+    console.log("================")
+    console.log(req.user.username)
+    console.log("================")
+    res.send(req.user.username)
 })
 
 route.get("/mom", (req, res)=>{
@@ -45,7 +46,7 @@ route.get("/mom", (req, res)=>{
         const  momentDB = client.db("momentDB")
         const moments = momentDB.collection("moments")
         moments.find({
-                user: privateUser
+                user: req.user.username
         }).toArray((err, data)=>{
             if(!err){
                 res.send(data)
@@ -76,7 +77,7 @@ if (req.file) {
 
         moments.insertOne({
             img: filename,
-            user: privateUser,
+            user: req.user.username,
             date: req.body.date,
             place: req.body.place,
             mom_text: req.body.momentText
