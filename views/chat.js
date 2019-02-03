@@ -12,15 +12,33 @@ $(()=>{
         $("#userMsg").show()
     }
     else{
-        $("#chat-btn").click(()=>{
+        function sendMsg(){
             console.log("#btn clicked")
             socket.emit("send msg", { userD: userDetails, msg: $("#chat-input").val() } )
+            $("#chat-input").val("") 
+        }
+
+        $("#chat-input").keydown((ev)=>{
+            if(ev.keyCode == 13){
+                ev.preventDefault()
+                sendMsg()
+            }
+        })
+
+        $("#chat-btn").click(()=>{
+            sendMsg()
         })
     
         socket.on("send msg", (data)=>{
             console.log("socket.on at  'send msg' ")
+
+            let date = new Date()
+            let h = date.getHours()
+            let m = date.getMinutes()
+            if(m<10)
+             m = "0" + m
         
-        $("#chat-box")
+        $("#chat-msg")
         //first
         .append(
             $("<div>")
@@ -47,10 +65,11 @@ $(()=>{
         .append(
             $("<span>")
             .attr("class","time-right")
-            .text("11:00")
+            .text(`${h}:${m}`)
         )
         )
-    
+
+        $("#chat-box").scrollTop(Number.MAX_SAFE_INTEGER)
     })
 }
 })

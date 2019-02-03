@@ -6,7 +6,7 @@ $(()=>{
             console.log(moment.date)
             $("#mom-container").append(
                 $("<div>")
-                .attr("class","border-dark  p-4 my-2")
+                .attr("class","border-dark p-4 my-2")
                 .css("border-radius","50px")
                 .css("background-color","bisque")
                 .css("border-style","dotted")
@@ -38,10 +38,8 @@ $(()=>{
                     .append(
                         $("<img>")
                         .attr("src",`../uploads/${moment.img}`)
-                        .attr("width","mr-auto")
-                        .attr("height","200px")
+                        .attr("class","img-thumbnail")
                     )
-                    // )/home/sid/Desktop/Moment Adder and Chatting Platform/uploads/ac94507d2d100a7965e7513c5a68cf0a.jpg
                 )
                 )
             )}

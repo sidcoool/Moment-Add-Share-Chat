@@ -33,13 +33,12 @@ route.get("/logout", (req, res)=>{
 
 
 route.get("/username", (req,res)=>{
-    console.log("================")
-    console.log(req.user.username)
-    console.log("================")
+    if(req.user)
     res.send(req.user.username)
 })
 
 route.get("/mom", (req, res)=>{
+    if(req.user){
     MongoClient.connect(mongo_url, (err, client)=>{
         if(err) throw err;
 
@@ -54,11 +53,15 @@ route.get("/mom", (req, res)=>{
         })  
         client.close()
     })
+}
+else{
+    res.redirect("/login")
+}
 } )
 
 
 route.post("/mom", upload.single('picture'), (req, res) => {
-
+if(req.user){
 let filename = ""
 if (req.file) {
     console.log("Uploading file...")
@@ -89,6 +92,10 @@ if (req.file) {
 
         client.close()
     })
+}
+else{
+    res.redirect("/login")
+}
 })
 
 module.exports = route
