@@ -18,8 +18,17 @@ const User = sequelize.define("user", {
         password: Sequelize.STRING
 })
 
-User.sync().then(()=>{console.log("Synced Successfully")}).catch(err=>{console.error(err)})
+const Moments = sequelize.define("moments", {
+    img: Sequelize.STRING,
+    user: Sequelize.STRING,
+    date: Sequelize.STRING,
+    place: Sequelize.STRING,
+    mom_text: Sequelize.STRING
+})
+
+User.sync().then(()=>{console.log("Synced User DB Successfully")}).catch(err=>{console.error(err)})
+Moments.sync().then(()=>{console.log("Synced Moments DB Successfully")}).catch(err=>{console.error(err)})
 
 module.exports = {
-    User
+    User,Moments
 }
