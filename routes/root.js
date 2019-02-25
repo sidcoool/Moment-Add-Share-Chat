@@ -3,10 +3,8 @@ const route = express.Router()
 const path = require("path")
 const User = require("../db").User
 const session = require('express-session')
-const flash = require("connect-flash")
 const passport = require("../passport").passport
 
-route.use(flash())
 
 route.post("/signup", (req, res)=>{
     User.create({
@@ -24,7 +22,6 @@ route.post("/signup", (req, res)=>{
 route.post("/login", passport.authenticate("local", {
     failureRedirect: "/login",
     successRedirect: "/private",
-    failureFlash: true
 }))
 
 route.get("/login", (req, res)=>{
@@ -34,7 +31,5 @@ route.get("/login", (req, res)=>{
     if (err) throw(err);
   })
 })
-
-
 
 module.exports = route
