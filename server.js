@@ -5,6 +5,7 @@ const passport = require('./passport').passport
 const session = require("express-session")
 const socketio = require("socket.io")
 const http = require("http")
+const PORT = process.env.PORT || 3333
 
 const server = http.createServer(app)
 const io = socketio(server)
@@ -52,6 +53,6 @@ io.on("connection", (socket)=>{
 })
 
 
-server.listen(3333, ()=>{
+server.listen(PORT, ()=>{
     console.log("Server Running")
 })
