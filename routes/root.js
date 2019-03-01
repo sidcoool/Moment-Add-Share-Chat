@@ -2,7 +2,6 @@ const express = require("express")
 const route = express.Router()
 const path = require("path")
 const User = require("../db").User
-const session = require('express-session')
 const passport = require("../passport").passport
 
 

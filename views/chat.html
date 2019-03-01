@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
 <script src="/socket.io/socket.io.js"></script>
+<script src="chatFun.js"></script>
 <script src="chat.js"></script>
 
 <style type="text/css">
@@ -39,12 +40,31 @@
         </span>
       </nav>
 
-<div class="container alert-success p-2 mt-5 rounded-pill" id="userMsg">
+<div class="container alert-success p-2 mt-3 rounded-pill" id="userMsg">
   <h2 class="text-center font-weight-bold">Enter First Moment with your profile pic to start</h2>
-</form>
+</div> 
+
+<div class="container col-lg-6 col-10">
+<div class="col col alert-heading text-center p-2" id="status">
+    <h3 style="background-color:rgb(212, 205, 196)"  class="p-1">Tap <b>ONLINE</b> to go online</h3>
+    <div class="btn btn-group d-flex flex-wrap align-content-center">
+        <button class="btn btn-info m-1" id="online">Online</button>
+        <button class="btn btn-success m-1" id="offline">Offiline</button>
+            </div>
+       <h4 style="background-color:rgb(212, 205, 196)" class="p-1"><br><b>NOTE: </b>If you are offline no user can chat with you
+        <br> If you don't reply for 10min you <b>Automatically </b>go <b>OFFLINE</b></h4> 
 </div>
 
-<div id="chat-box" class="container alert-heading text-center p-2 mt-2 col-lg-6 col-10" style="background-color:rgb(212, 205, 196); height: auto; max-height: 500px; overflow-y: scroll">
+  <div class="col alert-heading text-center p-2 mt-2" id="active">
+    <h2 style="background-color:rgb(212, 205, 196)">Click to Join to your chat <br> "Online Users"</h2>
+    <div class="btn btn-group d-flex flex-wrap align-content-center" id="activeUsers">
+<!-- <button class="btn btn-info m-1">Aman</button>
+<button class="btn btn-info m-1">Aman</button>
+<button class="btn btn-info m-1">Aman</button>-->
+    </div>
+  </div>
+    <div class="col">
+<div id="chat-box" class="container alert-heading text-center p-2 mt-2" style="background-color:rgb(212, 205, 196); height: auto; max-height: 500px; overflow-y: scroll">
 <h2 class="font-weight-bold">Chat</h2>
 <div id="chat-msg">
   <!-- <div class="container-custom">
@@ -87,6 +107,8 @@
   <input type="text" class="form-control  font-weight-bold" placeholder="Send Message" style="background-color:whitesmoke" id="chat-input">
    <span class="fa far fa-paper-plane ppl" id="chat-btn"></span>
 </form>
+</div>
+</div>
 </div>
 </body>
 </html>
