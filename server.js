@@ -32,44 +32,67 @@ app.use("/", require("./routes/root"))
 
 
    let  onlineUsers = []
+   let usertosocket = []
+   connectedUsers = []
 
 
 io.on("connection", (socket) => {
     console.log(socket.id)
 
     socket.on("send msg", (data) => {
-        io.emit("send msg", data)
+        io.to(`${data.userD[0].user} room`).emit("send msg", data);
     })
 
     socket.on("add user", (user) => {
+        if(onlineUsers.indexOf(user) == -1){
         onlineUsers.push(user)
+        usertosocket[user] = socket
+        socket.join(`${user} room`)
+        }
         io.emit("add user", onlineUsers)
     })
 
     socket.on("remove user", (user) => {
         let index = onlineUsers.indexOf(user)
         onlineUsers.splice(index, 1)
+        socket.leave(`${user} room`)
         io.emit("remove user", onlineUsers)
     })
 
-    // socket.on("connected user", (user) => {
-    //     userStatus.connectedUsers.push(user)
-    //     io.emit("connected user", {
-    //         userStatus
-    //     })
+    // socket.on("connected user", (connectedUsers)=>{
+
     // })
 
-    // socket.on("disconnected user", (user) => {
-    //     let index = userStatus.connectedUsers.indexOf(user);
-    //     userStatus.connectedUsers.splice(index, 1);
-    //     io.emit("disconnected user", {
-    //         userStatus
-    //     })
-    // })
+    socket.on("connected user", (user) => {
+        connectedUsers[user.myName] = user.connectedUsers.slice()
+
+            usertosocket[user.userName].join(`${user.myName} room`)
+            console.log("==============================")
+            console.log(connectedUsers[user.userName])
+            console.log("==============================")
+    })
+
+    socket.on("disconnected user", (user) => {
+        connectedUsers[user.myName] = user.connectedUsers.slice()
+
+        console.log("+++++++++++++++++++++++++++")
+            console.log(connectedUsers[user.userName])
+            console.log("+++++++++++++++++++++++++++")
+
+             usertosocket[user.userName].leave(`${user.myName} room`)
+
+
+        // if(typeof connectedUsers[user.userName] === "undefined"){
+        //     console.log("undefined working !")
+        //     socket.leave(`${user.userName} room`)
+        // }
+        //     else if(connectedUsers[user.userName].indexOf(user.myName) === -1){
+        //         console.log("indexof working !")
+        //     socket.leave(`${user.userName} room`)
+        //     }
+    })
+    
 })
-
-
-
 
 server.listen(PORT, () => {
     console.log("Server Running")

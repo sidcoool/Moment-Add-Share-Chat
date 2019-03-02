@@ -1,13 +1,8 @@
-let socket = io()
-//const onlineUsers = require("../db").OnlineUsers        
+let socket = io()      
 let userDetails
 
 $.get("private/mom").then((data) => {
     userDetails = data
-
-    // onlineUsers.create({
-    //     username: data[0].user
-    // })
 
     $(() => {
         $("#userMsg").hide()
@@ -47,44 +42,42 @@ $.get("private/mom").then((data) => {
                 $("#status").hide()
                 $("#active").show()
 
-                socket.on("add user", (onlineUsers) => {
-                    console.log(typeof onlineUsers)
-                   userAdd(connectedUsers,onlineUsers)
-                })
-
-                
-
-                //   setInterval(()=>{
-                //       console.log("set time out working")
-                //       $("#activeUsers").empty()
-
-                //     //   onlineUsers.findAll({}).then(userArr => {
-
-
-
-                //         for (let user of userArr) {
-                //             $("#activeUsers")
-                //             .append(
-                //                 $("<button>")
-                //                 .attr("class",connectedUsers.indexOf(user) == -1 ? "users btn btn-info m-1" : "users btn btn-success m-1")
-                //                 .text(user)
-                //                 )
-                //           }
-
-                //   }, 5000)
-
-                $(".users").on("click", (e) => {
+                function handler(e){
+                    console.log("working!")
                     if (e.target.className == "users btn btn-success m-1") {
                         e.target.className = "users btn btn-info m-1"
                         let index = connectedUsers.indexOf(e.target.innerText)
                         connectedUsers.splice(index, 1)
+
+                        socket.emit("disconnected user", {userName: e.target.innerText, myName: userDetails[0].user, connectedUsers: connectedUsers})
                     } else {
                         e.target.className = "users btn btn-success m-1"
                         connectedUsers.push(e.target.innerText)
+
+                        socket.emit("connected user",   {userName: e.target.innerText, myName: userDetails[0].user, connectedUsers: connectedUsers})
                     }
 
                     console.log(connectedUsers)
+                }
+
+
+                socket.on("add user", (onlineUsers) => {
+                    console.log(typeof onlineUsers)
+                    let OnlineUsers = onlineUsers
+                    let index = OnlineUsers.indexOf(userDetails[0].user)
+                    OnlineUsers.splice(index, 1)
+                   $("#activeUsers").empty()
+                   for (let user of OnlineUsers) {
+                       $("#activeUsers")
+                           .append(
+                               $("<button>")
+                               .attr("class", connectedUsers.indexOf(user) == -1 ? "users btn btn-info m-1" : "users btn btn-success m-1")
+                               .text(user)
+                               .click(handler)
+                           )
+                   }
                 })
+                    
 
                 $("#chat-box").show()
 

@@ -31,13 +31,6 @@ const Moments = sequelize.define("moments", {
     mom_text: Sequelize.STRING
 })
 
-// const OnlineUsers = sequelize.define("onlineUsers",{
-//     username:{
-//         type: Sequelize.STRING,
-//         allowNull: false,
-//         primaryKey: true
-//     }
-// })
 
 User.sync().then(()=>{console.log("Synced User DB Successfully")}).catch(err=>{console.error(err)})
 Moments.sync().then(()=>{console.log("Synced Moments DB Successfully")}).catch(err=>{console.error(err)})
