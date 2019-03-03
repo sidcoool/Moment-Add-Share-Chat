@@ -12,6 +12,10 @@ $(()=>{
 
     $.get("private/username").then((username)=>{
         $("#user").text(`Welcome ${username}`)
+    }).then(()=>{
+        console.log("added successfully")
+    }).catch((e)=>{
+        console.error(e)
     })
 
 //     $("#add-btn").click(()=>{
