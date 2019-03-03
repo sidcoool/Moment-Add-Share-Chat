@@ -30,6 +30,5 @@ function chatFun(img, user, msg, h, m){
         )
         )
 
-        $("#chat-box").scrollTop(Number.MAX_SAFE_INTEGER)
 }
 

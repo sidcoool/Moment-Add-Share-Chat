@@ -11,14 +11,12 @@ $.get("private/mom").then((data) => {
         $("#chat-box").hide()
         console.log(userDetails.length == 0)
 
-        let status = false
         let connectedUsers = []
 
         $("#online").click(() => {
-            status = true;
-            chatter()
             $("#online").attr("class", "btn btn-success m-1")
             $("#offline").attr("class", "btn btn-info m-1")
+            chatter()
         })
 
         $("#offline").click(() => {
@@ -35,7 +33,6 @@ $.get("private/mom").then((data) => {
         }
 
         function chatter() {
-            if (status == true) {
 
                 socket.emit("add user", userDetails[0].user)
 
@@ -49,12 +46,12 @@ $.get("private/mom").then((data) => {
                         let index = connectedUsers.indexOf(e.target.innerText)
                         connectedUsers.splice(index, 1)
 
-                        socket.emit("disconnected user", {userName: e.target.innerText, myName: userDetails[0].user, connectedUsers: connectedUsers})
+                        socket.emit("disconnected user", {userName: e.target.innerText, myName: userDetails[0].user})
                     } else {
                         e.target.className = "users btn btn-success m-1"
                         connectedUsers.push(e.target.innerText)
 
-                        socket.emit("connected user",   {userName: e.target.innerText, myName: userDetails[0].user, connectedUsers: connectedUsers})
+                        socket.emit("connected user",   {userName: e.target.innerText, myName: userDetails[0].user})
                     }
 
                     console.log(connectedUsers)
@@ -110,8 +107,9 @@ $.get("private/mom").then((data) => {
                     if (m < 10)
                         m = "0" + m
                     chatFun(data.userD[0].img, data.userD[0].user, data.msg, h, m)
+                    $("#chat-box").scrollTop(1000000)
                 })
-            }
+            
         }
     })
 })

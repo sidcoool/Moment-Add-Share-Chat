@@ -33,8 +33,7 @@ app.use("/", require("./routes/root"))
 
    let  onlineUsers = []
    let usertosocket = []
-   connectedUsers = []
-
+   let userRooms = []
 
 io.on("connection", (socket) => {
     console.log(socket.id)
@@ -44,10 +43,20 @@ io.on("connection", (socket) => {
     })
 
     socket.on("add user", (user) => {
+        console.log(onlineUsers)
+        socket.join(`${user} room`)
+        usertosocket[user] = socket
+
+        if(typeof userRooms[user] !== "undefined"){
+            for (let room of userRooms[user]) {
+                socket.join(room)
+            }
+        }
+
         if(onlineUsers.indexOf(user) == -1){
         onlineUsers.push(user)
-        usertosocket[user] = socket
-        socket.join(`${user} room`)
+        console.log("user added")
+        console.log(onlineUsers)
         }
         io.emit("add user", onlineUsers)
     })
@@ -59,37 +68,24 @@ io.on("connection", (socket) => {
         io.emit("remove user", onlineUsers)
     })
 
-    // socket.on("connected user", (connectedUsers)=>{
-
-    // })
-
     socket.on("connected user", (user) => {
-        connectedUsers[user.myName] = user.connectedUsers.slice()
-
             usertosocket[user.userName].join(`${user.myName} room`)
-            console.log("==============================")
-            console.log(connectedUsers[user.userName])
-            console.log("==============================")
+            console.log("connected")
+
+            if( typeof userRooms[user.userName] === "undefined"){
+                 userRooms[user.userName] = []
+                 userRooms[user.userName].push(`${user.myName} room`)
+        }
+            else if(userRooms[user.userName].indexOf(`${user.myName} room`) == -1)
+            userRooms[user.userName].push(`${user.myName} room`)
     })
 
     socket.on("disconnected user", (user) => {
-        connectedUsers[user.myName] = user.connectedUsers.slice()
+        usertosocket[user.userName].leave(`${user.myName} room`) 
+        console.log("disconnected")
 
-        console.log("+++++++++++++++++++++++++++")
-            console.log(connectedUsers[user.userName])
-            console.log("+++++++++++++++++++++++++++")
-
-             usertosocket[user.userName].leave(`${user.myName} room`)
-
-
-        // if(typeof connectedUsers[user.userName] === "undefined"){
-        //     console.log("undefined working !")
-        //     socket.leave(`${user.userName} room`)
-        // }
-        //     else if(connectedUsers[user.userName].indexOf(user.myName) === -1){
-        //         console.log("indexof working !")
-        //     socket.leave(`${user.userName} room`)
-        //     }
+        let index = userRooms[user.userName].indexOf(`${user.myName} room`)
+        userRooms[user.userName].splice(index, 1)
     })
     
 })
@@ -99,16 +95,3 @@ server.listen(PORT, () => {
 })
 
 
-// usertoid[data.userD[0].user] = socket.id
-
-// let msgVal = data.msg
-// if(msgVal.startsWith("@")){
-//      client = msgVal.split(":")[0].substring(1)
-//      realMsg = msgVal.split(":")[1].trim()
-// }
-// if(client && realMsg && usertoid[client])
-// io.to(usertoid[client]).emit("send msg", {
-//     user: data.userD,
-//     msg: realMsg
-// })
-// else
