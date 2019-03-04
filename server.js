@@ -44,6 +44,10 @@ io.on("connection", (socket) => {
         io.to(`${data.userD[0].user} room`).emit("send msg", data);
     })
 
+    socket.on("share mom", (data) => {
+        io.to(`${data.user} room`).emit("share mom", data.data);
+    })
+
     socket.on("add user", (user) => {
         console.log(onlineUsers)
         socket.join(`${user} room`)

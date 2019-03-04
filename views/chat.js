@@ -2,6 +2,10 @@ let socket = io()
 let userDetails
 
 $.get("private/mom").then((data) => {
+
+    if(data == "null")
+    window.location.replace("/")
+
     userDetails = data
     let dataStore = {
         me,
@@ -13,12 +17,14 @@ $.get("private/mom").then((data) => {
 
     $(() => {
 
+        let share = false
+        let shareData
+
         window.addEventListener('beforeunload', function (e) {
             e.preventDefault();
             //e.returnValue = '';
             socket.emit("remove user", userDetails[0].user)
 
-            //socket.emit("test", dataStore)
             let ds = JSON.stringify(dataStore)
             $.post("private/chat", {data : ds} , data => {
                 if(data)
@@ -26,6 +32,18 @@ $.get("private/mom").then((data) => {
                 else
                 console.error("error !")
             })
+        })
+
+        $("#shareText").hide()
+        $.get("private/share", (data)=>{
+            if(data.id !== ""){
+                console.log(data)
+                $("#shareText").show()
+
+                $("#chat-input").val("Share this moment")
+                shareData = data
+                share = true
+            }
         })
 
         $("#userMsg").hide()
@@ -106,18 +124,24 @@ $.get("private/mom").then((data) => {
 
 
             $("#chat-box").show()
+
             $.get("private/chat", (chats)=>{
                 for (let chat of chats) {
                     chatFun(chat.imgD, chat.userD, chat.msgD, chat.timeD)
                 }
+                $("#chat-box").scrollTop(Number.MAX_SAFE_INTEGER)
             })
 
             function sendMsg() {
-                console.log("#btn clicked")
-                socket.emit("send msg", {
-                    userD: userDetails,
-                    msg: $("#chat-input").val()
-                })
+                if(share){
+                    socket.emit("share mom", {data: shareData, user: userDetails[0].user})
+                    share = false
+                }else{
+                    socket.emit("send msg", {
+                        userD: userDetails,
+                        msg: $("#chat-input").val()
+                    })
+                }
                 $("#chat-input").val("")
             }
 
@@ -130,6 +154,11 @@ $.get("private/mom").then((data) => {
 
             $("#chat-btn").click(() => {
                 sendMsg()
+            })
+
+            socket.on("share mom", (data)=>{
+                shareMomFun(data)
+                $("#chat-box").scrollTop(Number.MAX_SAFE_INTEGER)
             })
 
             socket.on("send msg", (data) => {
@@ -151,7 +180,7 @@ $.get("private/mom").then((data) => {
                 })
 
                 chatFun(data.userD[0].img, data.userD[0].user, data.msg, time)
-                $("#chat-box").scrollTop(1000000)
+                $("#chat-box").scrollTop(Number.MAX_SAFE_INTEGER)
             })
 
         }

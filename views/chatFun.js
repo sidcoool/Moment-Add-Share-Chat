@@ -29,6 +29,4 @@ function chatFun(img, user, msg, time){
             .text(time)
         )
         )
-
 }
-

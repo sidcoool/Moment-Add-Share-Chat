@@ -1,15 +1,6 @@
 $(()=>{
     console.log("Page open")
 
-    async function log_out() {
-        await $.get("private/logout")
-    }
-
-    $("#logout-btn").click(()=>{
-        log_out()
-        window.location.replace("/")
-    })
-
     $.get("private/username").then((username)=>{
         $("#user").text(`Welcome ${username}`)
     }).then(()=>{
