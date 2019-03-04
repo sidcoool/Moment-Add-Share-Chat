@@ -5,6 +5,13 @@ $.get("private/mom").then((data) => {
     userDetails = data
 
     $(() => {
+        
+        window.addEventListener('beforeunload', function (e) {
+            e.preventDefault();
+            //e.returnValue = '';
+            socket.emit("remove user", userDetails[0].user)
+          });
+        
         $("#userMsg").hide()
         $("#status").hide()
         $("#active").hide()
@@ -63,6 +70,7 @@ $.get("private/mom").then((data) => {
                     let OnlineUsers = onlineUsers
                     let index = OnlineUsers.indexOf(userDetails[0].user)
                     OnlineUsers.splice(index, 1)
+
                    $("#activeUsers").empty()
                    for (let user of OnlineUsers) {
                        $("#activeUsers")

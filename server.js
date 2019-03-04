@@ -38,6 +38,7 @@ app.use("/", require("./routes/root"))
 io.on("connection", (socket) => {
     console.log(socket.id)
 
+
     socket.on("send msg", (data) => {
         io.to(`${data.userD[0].user} room`).emit("send msg", data);
     })
@@ -46,6 +47,11 @@ io.on("connection", (socket) => {
         console.log(onlineUsers)
         socket.join(`${user} room`)
         usertosocket[user] = socket
+
+        for (let ouser of onlineUsers) {
+            if(ouser !== user)
+            usertosocket[ouser].leave(`${user} room`)
+        }
 
         if(typeof userRooms[user] !== "undefined"){
             for (let room of userRooms[user]) {
@@ -62,10 +68,10 @@ io.on("connection", (socket) => {
     })
 
     socket.on("remove user", (user) => {
+        console.log("removing user")
         let index = onlineUsers.indexOf(user)
         onlineUsers.splice(index, 1)
-        socket.leave(`${user} room`)
-        io.emit("remove user", onlineUsers)
+        io.emit("add user", onlineUsers)
     })
 
     socket.on("connected user", (user) => {
@@ -81,13 +87,16 @@ io.on("connection", (socket) => {
     })
 
     socket.on("disconnected user", (user) => {
+        if(typeof usertosocket[user.userName] !== "undefined")
         usertosocket[user.userName].leave(`${user.myName} room`) 
         console.log("disconnected")
 
-        let index = userRooms[user.userName].indexOf(`${user.myName} room`)
-        userRooms[user.userName].splice(index, 1)
+        if(typeof  userRooms[user.userName] !== "undefined"){
+            let index = userRooms[user.userName].indexOf(`${user.myName} room`)
+            userRooms[user.userName].splice(index, 1)
+        }
     })
-    
+
 })
 
 server.listen(PORT, () => {
