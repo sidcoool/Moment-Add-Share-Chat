@@ -38,6 +38,7 @@ app.use("/", require("./routes/root"))
 io.on("connection", (socket) => {
     console.log(socket.id)
 
+    socket.on("test", test => console.log(test))
 
     socket.on("send msg", (data) => {
         io.to(`${data.userD[0].user} room`).emit("send msg", data);

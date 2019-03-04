@@ -3,11 +3,13 @@ const route = express.Router()
 const path = require("path")
 const multer = require("multer")
 const  Moments = require("../db").Moments
+const  Chat = require("../db").Chat
 const upload = multer({
     dest: './uploads/'
 })
 const fs = require('fs')
 
+route.use(express.static(path.join(__dirname, "views")))
 
 route.get("/", (req, res) => {
     console.log("private here")
@@ -28,7 +30,7 @@ route.get("/", (req, res) => {
 
 route.get("/logout", (req, res) => {
     console.log("inside logout")
-    req.session.destroy(function (err) {
+    req.session.destroy( (err) => {
         () => {}
     });
 })
@@ -39,13 +41,31 @@ route.get("/username", (req, res) => {
         res.send(req.user.username)
 })
 
+route.post("/chat", (req,res) =>{
+    Chat.bulkCreate(JSON.parse(req.body.data)).then((data)=>{
+        res.send(true)
+    })
+})
+
+route.get("/chat", (req,res) => {
+    Chat.findAll({
+        where:{
+            me: req.user.username
+        }
+    }).then(data =>{
+        res.send(data)}).catch(err => console.error(err))
+})
+
 route.get("/mom", (req, res) => {
     if (req.user) {
         Moments.findAll({
             where: {
                 user: req.user.username
             }
-        }).then(data => res.send(data)).catch(err => console.error(err))
+        }).then(data => {         
+            res.send(data)
+        }
+            ).catch(err => console.error(err))
     } else {
         res.redirect("/login")
     }

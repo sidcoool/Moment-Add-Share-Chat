@@ -1,5 +1,5 @@
 
-function chatFun(img, user, msg, h, m){
+function chatFun(img, user, msg, time){
     $("#chat-msg")
         .append(
             $("<div>")
@@ -26,7 +26,7 @@ function chatFun(img, user, msg, h, m){
         .append(
             $("<span>")
             .attr("class","time-right")
-            .text(`${h}:${m}`)
+            .text(time)
         )
         )
 

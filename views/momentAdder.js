@@ -7,7 +7,7 @@ $(()=>{
 
     $("#logout-btn").click(()=>{
         log_out()
-        location.reload(true)
+        window.location.replace("/")
     })
 
     $.get("private/username").then((username)=>{
