@@ -81,7 +81,7 @@ route.post("/share", (req, res) => {
     }).then((data) => {
         sharedMoment.date = data.date
         sharedMoment.id = data.id
-        sharedMoment.date = data.place
+        sharedMoment.place = data.place
         sharedMoment.mom = data.mom_text
         sharedMoment.img = data.img
 
