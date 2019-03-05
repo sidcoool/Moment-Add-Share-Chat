@@ -65,7 +65,7 @@ $(()=>{
                     )
                     .append(
                         $("<div>")
-                        .attr("class","share btn btn-group mt-3")
+                        .attr("class","share btn btn-group mt-3 col-12 col-lg-6")
                         .append(
                             $("<button>")
                             .attr("class","btn btn-success")
