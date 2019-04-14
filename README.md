@@ -1,5 +1,5 @@
 # Moment-Add-Share-Chat 
-# TRY NOW - [addmoments.herokuapp.com]
+# TRY NOW - (addmoments.herokuapp.com)
 
 > Web-App to record your special moments and share them with friends and do chat with friends in real time
 ## How to install in your Linux System
@@ -14,7 +14,7 @@ node server.js
 ![Screen](Screens/screen2.png)
 ![Screen](Screens/screen3.png)
 
-##Contact
+## Contact
 
 Siddhartha Goel - [Linkedin](linkedin.com/in/siddhartha-goel-b2098117a) – siddharthagoel1998@gmail.com
 Distributed under the MIT license. See ``LICENSE`` for more information.
