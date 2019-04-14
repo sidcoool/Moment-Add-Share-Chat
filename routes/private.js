@@ -4,6 +4,7 @@ const path = require("path")
 const multer = require("multer")
 const Moments = require("../db").Moments
 const Chat = require("../db").Chat
+const sharp = require("sharp")
 const upload = multer({
     dest: './uploads/'
 })
@@ -124,13 +125,20 @@ route.post("/mom", upload.single('picture'), (req, res) => {
         let filename = ""
         if (req.file) {
             console.log("Uploading file...")
-            filename = req.file.filename + ".jpg"
+            filename = req.file.filename + "_new" + ".jpg"
 
             fs.rename(`./uploads/${req.file.filename}`,
                 `./uploads/${req.file.filename}.jpg`, (err) => {
                     if (err)
                         console.error(err)
                     else {
+
+                        sharp(`./uploads/${req.file.filename}.jpg`).resize(200, 200).toFile(`./uploads/${req.file.filename}_new.jpg`, (err) => {
+                            if(err)
+                            console.error(err)
+                            else
+                            fs.unlinkSync(`./uploads/${req.file.filename}.jpg`)
+                        })
                         Moments.create({
                             img: filename,
                             user: req.user.username,

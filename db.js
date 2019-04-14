@@ -1,14 +1,17 @@
 const Sequelize = require("sequelize")
+const config = require("./config")
 
-// const sequelize = new Sequelize("mytest", "sidcool", "sid", {
-//     host: "localhost",
-//     dialect: "mysql"
-// })
 
-const sequelize = new Sequelize("d26mciklunk1b1", "iumzkmtazrxfpl", "f2273845491c669c94c4a3437619d7f05c6b2c43fc6a6f3536054a19b95526f3", {
-    host: "ec2-54-83-44-4.compute-1.amazonaws.com",
-    dialect: "postgres"
+
+const sequelize = new Sequelize(config.dev.database, config.dev.user, config.dev.password, {
+    host: config.dev.host,
+    dialect: config.dev.dialect
 })
+
+//  const sequelize = new Sequelize(config.prod.database, config.prod.user, config.prod.password, {
+//     host: config.prod.host,
+//     dialect: config.prod.dialect
+// })
 
 const User = sequelize.define("user", {
     id : {

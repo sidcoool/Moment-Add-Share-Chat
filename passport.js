@@ -1,6 +1,7 @@
 const passport = require("passport")
 const LocalStrategy = require("passport-local").Strategy
 const User = require("./db").User
+const bcrypt = require("bcrypt")
 
 passport.serializeUser((user, done)=>{
     done(null, user.username)
@@ -31,14 +32,16 @@ passport.use(new LocalStrategy((userName, password, done)=>{
         if(!user)
         return done(null, false, {message: "No such User"})
 
-        if(user.password !==password){
-            return done(null, false, {message: "Wrong password"})
-        }
-        return done(null, user)
-    }).catch((err) => {
-        return done(err)
+        bcrypt.compare(password, user.password, (err, res) => {
+            if(!res) {
+                return done(null, false, {message: "Wrong password"})
+            }  
+            return done(null, user)
+
+          })
     })
 }))
+
 
 module.exports = {
     passport
