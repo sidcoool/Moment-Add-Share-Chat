@@ -16,7 +16,7 @@ node server.js
 
 ## Contact
 
-Siddhartha Goel - [Linkedin](linkedin.com/in/siddhartha-goel-b2098117a) – siddharthagoel1998@gmail.com
+Siddhartha Goel - [Linkedin](https://linkedin.com/in/siddhartha-goel-b2098117a) – siddharthagoel1998@gmail.com
 Distributed under the MIT license. See ``LICENSE`` for more information.
 
 [![License][license-image]][license-url]
